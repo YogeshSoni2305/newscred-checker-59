@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, FileText, Globe, AlertCircle, Info, CheckCircle2 } from "lucide-react";
+import DisplayCards from "@/components/ui/display-cards";
 
 interface Source {
   id: string;
@@ -19,6 +20,8 @@ interface SourcesListProps {
 }
 
 const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) => {
+  const [selectedSource, setSelectedSource] = useState<Source | null>(null);
+
   if (isLoading) {
     return (
       <div className="h-full space-y-4 p-1 animate-pulse">
@@ -76,11 +79,11 @@ const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) =>
   const getRelevanceBadge = (relevance: Source['relevance']) => {
     switch (relevance) {
       case 'high':
-        return <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200">High Relevance</Badge>;
+        return <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800">High Relevance</Badge>;
       case 'medium':
-        return <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200">Medium Relevance</Badge>;
+        return <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800">Medium Relevance</Badge>;
       case 'low':
-        return <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200">Low Relevance</Badge>;
+        return <Badge variant="outline" className="bg-red-50 text-red-600 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800">Low Relevance</Badge>;
       default:
         return null;
     }
@@ -112,31 +115,50 @@ const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) =>
     }
   };
 
+  // Create cards for DisplayCards
+  const sourceCards = sources.map(source => ({
+    icon: getSourceIcon(source.type),
+    title: getSourceTypeText(source.type),
+    description: source.title,
+    date: getAgreeText(source.agreeLevel),
+    iconClassName: `text-${source.type === 'article' ? 'blue' : source.type === 'study' ? 'purple' : source.type === 'factCheck' ? 'green' : 'cyan'}-500`,
+    titleClassName: `text-${source.type === 'article' ? 'blue' : source.type === 'study' ? 'purple' : source.type === 'factCheck' ? 'green' : 'cyan'}-500`,
+    source: source
+  }));
+
+  const handleCardClick = (source: Source) => {
+    setSelectedSource(source);
+  };
+
   return (
-    <div className="h-full overflow-y-auto p-1 animate-slide-up space-y-4">
-      {sources.map((source) => (
-        <Card key={source.id} className="overflow-hidden border-0 shadow-sm glass-effect card-hover">
+    <div className="h-full flex flex-col gap-6 p-1 animate-slide-up">
+      <div className="flex-grow">
+        <DisplayCards cards={sourceCards as any} />
+      </div>
+      
+      {selectedSource && (
+        <Card className="overflow-hidden border-0 shadow-sm glass-effect card-hover mt-4">
           <CardContent className="p-4">
             <div className="flex items-start space-x-3">
               <div className="mt-1 flex-shrink-0">
-                {getSourceIcon(source.type)}
+                {getSourceIcon(selectedSource.type)}
               </div>
               
               <div className="flex-grow space-y-2">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-medium text-foreground line-clamp-1">{source.title}</h3>
+                    <h3 className="font-medium text-foreground line-clamp-1">{selectedSource.title}</h3>
                     <div className="flex items-center space-x-1 mt-1">
                       <Badge variant="secondary" className="text-xs px-2 py-0 rounded-sm">
-                        {getSourceTypeText(source.type)}
+                        {getSourceTypeText(selectedSource.type)}
                       </Badge>
                       
-                      {source.agreeLevel && (
+                      {selectedSource.agreeLevel && (
                         <div className="flex items-center space-x-1 text-xs text-muted-foreground">
                           <span>•</span>
                           <div className="flex items-center space-x-1">
-                            {getAgreeIcon(source.agreeLevel)}
-                            <span>{getAgreeText(source.agreeLevel)}</span>
+                            {getAgreeIcon(selectedSource.agreeLevel)}
+                            <span>{getAgreeText(selectedSource.agreeLevel)}</span>
                           </div>
                         </div>
                       )}
@@ -144,16 +166,16 @@ const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) =>
                   </div>
                   
                   <div className="ml-2 flex-shrink-0">
-                    {getRelevanceBadge(source.relevance)}
+                    {getRelevanceBadge(selectedSource.relevance)}
                   </div>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-muted-foreground truncate max-w-[80%]">
-                    {source.url}
+                    {selectedSource.url}
                   </span>
                   <a 
-                    href={source.url}
+                    href={selectedSource.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center text-xs text-primary hover:text-primary/80 transition-colors"
@@ -166,7 +188,7 @@ const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) =>
             </div>
           </CardContent>
         </Card>
-      ))}
+      )}
     </div>
   );
 };

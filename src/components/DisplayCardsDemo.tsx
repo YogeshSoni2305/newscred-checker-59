@@ -1,7 +1,8 @@
-
 import { Sparkles } from "lucide-react";
 import DisplayCards from "@/components/ui/display-cards";
 
+// This component is no longer used as we've moved the display cards to the Sources component
+// Keeping the file for reference purposes only
 const defaultCards = [
   {
     icon: <Sparkles className="size-4 text-blue-300" />,
