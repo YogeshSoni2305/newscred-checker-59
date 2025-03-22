@@ -51,16 +51,24 @@ const mockSources = [
   }
 ];
 
+// Define the type for credibility level
+type CredibilityLevel = 'high' | 'medium' | 'low' | 'unknown';
+
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasResults, setHasResults] = useState(false);
   
   // In a real application, these would be populated from API responses
-  const [analysisData, setAnalysisData] = useState({
+  const [analysisData, setAnalysisData] = useState<{
+    credibilityScore: number;
+    credibilityLevel: CredibilityLevel;
+    analysisText: string;
+    keyPoints: string[]
+  }>({
     credibilityScore: 0,
-    credibilityLevel: 'unknown' as const,
+    credibilityLevel: 'unknown',
     analysisText: '',
-    keyPoints: [] as string[]
+    keyPoints: []
   });
   
   const [sources, setSources] = useState<Array<{
