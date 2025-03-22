@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import NewsInput from "@/components/NewsInput";
 import AnalysisTabs from "@/components/AnalysisTabs";
 import { HeroScrollDemo } from "@/components/HeroScrollDemo";
 import { ModeToggle } from "@/components/ModeToggle";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import IpadAnimation from "@/components/IpadAnimation";
 
 // Mock data for our demo
 const mockAnalysis = {
@@ -118,16 +118,14 @@ const Index = () => {
           <ResizableHandle withHandle />
           
           <ResizablePanel defaultSize={40} minSize={30}>
-            <div className="glass-effect rounded-2xl p-6 shadow-sm h-full flex flex-col animate-slide-up">
-              <AnalysisTabs
-                isLoading={isLoading}
-                credibilityScore={analysisData.credibilityScore}
-                credibilityLevel={analysisData.credibilityLevel}
-                analysisText={analysisData.analysisText}
-                keyPoints={analysisData.keyPoints}
-                sources={sources}
-              />
-            </div>
+            <IpadAnimation
+              isLoading={isLoading}
+              credibilityScore={analysisData.credibilityScore}
+              credibilityLevel={analysisData.credibilityLevel}
+              analysisText={analysisData.analysisText}
+              keyPoints={analysisData.keyPoints}
+              sources={sources}
+            />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
