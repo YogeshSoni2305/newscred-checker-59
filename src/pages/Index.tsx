@@ -1,9 +1,9 @@
-
 import React, { useState } from "react";
 import NewsInput from "@/components/NewsInput";
 import AnalysisTabs from "@/components/AnalysisTabs";
 import { HeroScrollDemo } from "@/components/HeroScrollDemo";
 import { ModeToggle } from "@/components/ModeToggle";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 // Mock data for our demo
 const mockAnalysis = {
@@ -102,16 +102,22 @@ const Index = () => {
         <ModeToggle />
       </div>
       
-      {!hasResults ? (
-        <HeroScrollDemo />
-      ) : (
-        <div className="container max-w-6xl mx-auto py-12 px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <div className="glass-effect rounded-2xl p-6 shadow-sm animate-slide-down">
-              <NewsInput onProcessNews={handleProcessNews} isLoading={isLoading} />
-            </div>
-            
-            <div className="glass-effect rounded-2xl p-6 shadow-sm h-[600px] flex flex-col animate-slide-down">
+      <div className="container max-w-6xl mx-auto py-12 px-4 sm:px-6">
+        <ResizablePanelGroup direction="horizontal" className="min-h-[80vh]">
+          <ResizablePanel defaultSize={60} minSize={40}>
+            {!hasResults ? (
+              <HeroScrollDemo />
+            ) : (
+              <div className="glass-effect rounded-2xl p-6 shadow-sm animate-slide-down h-full">
+                <NewsInput onProcessNews={handleProcessNews} isLoading={isLoading} />
+              </div>
+            )}
+          </ResizablePanel>
+          
+          <ResizableHandle withHandle />
+          
+          <ResizablePanel defaultSize={40} minSize={30}>
+            <div className="glass-effect rounded-2xl p-6 shadow-sm h-full flex flex-col animate-slide-down">
               <AnalysisTabs
                 isLoading={isLoading}
                 credibilityScore={analysisData.credibilityScore}
@@ -121,9 +127,9 @@ const Index = () => {
                 sources={sources}
               />
             </div>
-          </div>
-        </div>
-      )}
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
     </div>
   );
 };
