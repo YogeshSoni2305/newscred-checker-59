@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import NewsInput from "@/components/NewsInput";
 import AnalysisTabs from "@/components/AnalysisTabs";
+import { DisplayCardsDemo } from "@/components/DisplayCardsDemo";
 
 // Mock data for our demo
 const mockAnalysis = {
@@ -119,6 +120,12 @@ const Index = () => {
               sources={sources}
             />
           </div>
+        </div>
+        
+        {/* DisplayCards Component Showcase */}
+        <div className="mt-20 mb-10">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center tracking-tight">Trending Topics</h2>
+          <DisplayCardsDemo />
         </div>
       </div>
     </div>
