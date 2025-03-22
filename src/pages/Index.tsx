@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import NewsInput from "@/components/NewsInput";
 import AnalysisTabs from "@/components/AnalysisTabs";
@@ -108,7 +109,7 @@ const Index = () => {
             {!hasResults ? (
               <HeroScrollDemo />
             ) : (
-              <div className="glass-effect rounded-2xl p-6 shadow-sm animate-slide-down h-full">
+              <div className="glass-effect rounded-2xl p-6 shadow-sm h-full">
                 <NewsInput onProcessNews={handleProcessNews} isLoading={isLoading} />
               </div>
             )}
@@ -117,7 +118,7 @@ const Index = () => {
           <ResizableHandle withHandle />
           
           <ResizablePanel defaultSize={40} minSize={30}>
-            <div className="glass-effect rounded-2xl p-6 shadow-sm h-full flex flex-col animate-slide-down">
+            <div className="glass-effect rounded-2xl p-6 shadow-sm h-full flex flex-col">
               <AnalysisTabs
                 isLoading={isLoading}
                 credibilityScore={analysisData.credibilityScore}
