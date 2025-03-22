@@ -123,7 +123,8 @@ const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) =>
     date: getAgreeText(source.agreeLevel),
     iconClassName: `text-${source.type === 'article' ? 'blue' : source.type === 'study' ? 'purple' : source.type === 'factCheck' ? 'green' : 'cyan'}-500`,
     titleClassName: `text-${source.type === 'article' ? 'blue' : source.type === 'study' ? 'purple' : source.type === 'factCheck' ? 'green' : 'cyan'}-500`,
-    source: source
+    source: source,
+    onClick: () => handleCardClick(source)
   }));
 
   const handleCardClick = (source: Source) => {
@@ -133,7 +134,7 @@ const SourcesList: React.FC<SourcesListProps> = ({ isLoading, sources = [] }) =>
   return (
     <div className="h-full flex flex-col gap-6 p-1 animate-slide-up">
       <div className="flex-grow">
-        <DisplayCards cards={sourceCards as any} />
+        <DisplayCards cards={sourceCards} />
       </div>
       
       {selectedSource && (

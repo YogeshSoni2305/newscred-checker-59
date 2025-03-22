@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import NewsInput from "@/components/NewsInput";
 import AnalysisTabs from "@/components/AnalysisTabs";
 import { HeroScrollDemo } from "@/components/HeroScrollDemo";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { ModeToggle } from "@/components/ModeToggle";
 
 // Mock data for our demo
@@ -98,14 +97,14 @@ const Index = () => {
   };
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="news-checker-theme">
-      <div className="min-h-screen bg-gradient-to-b from-background to-accent/30 text-foreground">
-        <div className="absolute top-4 right-4 z-50">
-          <ModeToggle />
-        </div>
-        
+    <div className="min-h-screen bg-gradient-to-b from-background to-accent/30 text-foreground">
+      <div className="absolute top-4 right-4 z-50">
+        <ModeToggle />
+      </div>
+      
+      {!hasResults ? (
         <HeroScrollDemo />
-        
+      ) : (
         <div className="container max-w-6xl mx-auto py-12 px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             <div className="glass-effect rounded-2xl p-6 shadow-sm animate-slide-down">
@@ -124,8 +123,8 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </div>
-    </ThemeProvider>
+      )}
+    </div>
   );
 };
 
