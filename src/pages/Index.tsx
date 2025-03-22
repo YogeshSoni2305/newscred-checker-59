@@ -109,7 +109,7 @@ const Index = () => {
             {!hasResults ? (
               <HeroScrollDemo />
             ) : (
-              <div className="glass-effect rounded-2xl p-6 shadow-sm h-full">
+              <div className="glass-effect rounded-2xl p-6 shadow-sm animate-slide-up h-full">
                 <NewsInput onProcessNews={handleProcessNews} isLoading={isLoading} />
               </div>
             )}
@@ -118,7 +118,7 @@ const Index = () => {
           <ResizableHandle withHandle />
           
           <ResizablePanel defaultSize={40} minSize={30}>
-            <div className="glass-effect rounded-2xl p-6 shadow-sm h-full flex flex-col">
+            <div className="glass-effect rounded-2xl p-6 shadow-sm h-full flex flex-col animate-slide-up">
               <AnalysisTabs
                 isLoading={isLoading}
                 credibilityScore={analysisData.credibilityScore}
